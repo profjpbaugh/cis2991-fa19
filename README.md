@@ -56,7 +56,9 @@ If you have a physical Android device, plug it in with USB cable and enable "USB
 Alternatively, you can run on an Android emulator. Create an Android virtual device by opening the "AVD Manager" from within Android Studio. Select the Pie API Level 28 image.
 
 Run the following command from the project folder:
+
 ```react-native run-android```
+
 If everything is set up correctly, you should see the app running on your physical or virtual device.
 
 For iOS development see [here](https://facebook.github.io/react-native/docs/running-on-device), select "development OS" macOS and "target OS" iOS.
