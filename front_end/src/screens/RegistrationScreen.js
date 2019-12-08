@@ -48,12 +48,14 @@ export class RegistrationScreen extends React.Component {
     this.state = {
       email: '',
       password: '',
-      name: '',
+      firstName: '',
+      lastName: '',
       streetAddress: '',
       city: '',
       stateUS: '',
       zipCode: '',
-      phone: '',
+      mobilePhone: '',
+      residentialPhone: '',
       loading: false
     };
   }
@@ -72,17 +74,23 @@ export class RegistrationScreen extends React.Component {
   clearForm = () => {
     this.setState({email: ''});
     this.setState({password: ''});
-    this.setState({name: ''});
+    this.setState({firstName: ''});
+    this.setState({lastName: ''});
     this.setState({streetAddress: ''});
     this.setState({city: ''});
     this.setState({stateUS: ''});
     this.setState({zipCode: ''});
-    this.setState({phone: ''});
+    this.setState({mobilePhone: ''});
+    this.setState({residentialPhone: ''});
     this.setState({loading: false});
   }
 
-  validateName = () => {
-    return (this.state.name !== '');
+  validateFirstName = () => {
+    return (this.state.firstName !== '');
+  }
+
+  validateLastName = () => {
+    return (this.state.lastName !== '');
   }
 
   validateEmail = () => {
@@ -109,14 +117,17 @@ export class RegistrationScreen extends React.Component {
     return (/^\d{5}$/.test(this.state.zipCode));
   }
 
-  validatePhone = () => {
-    return (/^\d{10}$/.test(this.state.phone));
+  validatePhone = (phone) => {
+    return (/^\d{10}$/.test(phone));
   }
 
   registerPressed = () => {
-    if (!this.validateName()) {
-      Alert.alert('Please enter valid Full Name');
-      // this.setState({name: ''});
+    if (!this.validateFirstName()) {
+      Alert.alert('Please enter valid First Name');
+      return;
+    }
+    if (!this.validateLastName()) {
+      Alert.alert('Please enter valid Last Name');
       return;
     }
     if (!this.validateEmail()) {
@@ -150,9 +161,12 @@ export class RegistrationScreen extends React.Component {
       // this.setState({zipCode: ''});
       return;
     }
-    if (!this.validatePhone()) {
-      Alert.alert('Please enter valid Phone Number.', 'Must be 10 digits.');
-      // this.setState({phone: ''});
+    if (!this.validatePhone(this.state.mobilePhone)) {
+      Alert.alert('Please enter valid Mobile Phone Number.', 'Must be 10 digits.');
+      return;
+    }
+    if (!this.validatePhone(this.state.residentialPhone)) {
+      Alert.alert('Please enter valid Residential Phone Number.', 'Must be 10 digits.');
       return;
     }
 
@@ -178,13 +192,24 @@ export class RegistrationScreen extends React.Component {
         <SafeAreaView style={styles.container}>
           <ScrollView style={styles.scrollView} >
             <View style={styles.labelAndTextInputView}>
-              <Text style={styles.label}>Full name: </Text>
+              <Text style={styles.label}>First name: </Text>
               <TextInput
                 style={styles.textInput}
-                placeholder="Full name"
+                placeholder="First name"
                 autoCompleteType="name"
-                onChangeText={(name) => this.setState({name})}
-                value={this.state.name}
+                onChangeText={(firstName) => this.setState({firstName})}
+                value={this.state.firstName}
+              />
+            </View>
+
+            <View style={styles.labelAndTextInputView}>
+              <Text style={styles.label}>Last name: </Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Last name"
+                autoCompleteType="name"
+                onChangeText={(lastName) => this.setState({lastName})}
+                value={this.state.lastName}
               />
             </View>
 
@@ -306,14 +331,25 @@ export class RegistrationScreen extends React.Component {
             </View>
 
             <View style={styles.labelAndTextInputView}>
-              <Text style={styles.label}>Phone number: </Text>
+              <Text style={styles.label}>Mobile Phone: </Text>
               <TextInput
                 style={styles.textInput}
                 keyboardType = 'numeric'
-                placeholder="Phone number"
+                placeholder="Mobile Phone"
                 autoCompleteType="tel"
-                onChangeText={(phone) => this.setState({phone})}
-                value={this.state.phone}
+                onChangeText={(mobilePhone) => this.setState({mobilePhone})}
+                value={this.state.mobilePhone}
+              />
+            </View>
+            <View style={styles.labelAndTextInputView}>
+              <Text style={styles.label}>Residential Phone: </Text>
+              <TextInput
+                style={styles.textInput}
+                keyboardType = 'numeric'
+                placeholder="Residential Phone"
+                autoCompleteType="tel"
+                onChangeText={(residentialPhone) => this.setState({residentialPhone})}
+                value={this.state.residentialPhone}
               />
             </View>
           </ScrollView>
